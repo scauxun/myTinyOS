@@ -5,6 +5,7 @@
 #include "idt.h"
 #include "vmm.h"
 
+// 内核的地址
 #define PAGE_OFFSET 	0xC0000000
 
 
@@ -39,10 +40,13 @@ extern pgd_t pgd_kern[PGD_SIZE];
 
 void init_vmm();
 
+// 更换目录页
 void switch_pgd(u32int pd);
 
+//  把物理地址映射到虚拟地址
 void map(pgd_t *pgd_now, u32int va, u32int pa, u32int flags);
 
+// 取消映射
 void unmap(pgd_t *pgd_now, u32int va);
 
 u32int get_mapping(pgd_t *pgd_now, u32int va, u32int *pa);

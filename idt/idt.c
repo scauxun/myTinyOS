@@ -3,10 +3,12 @@
 #include "debug.h"
 #include "idt.h"
 
+// 中断描述符表
 idt_entry_t idt_entries[256];
 
 idt_ptr_t idt_ptr;
 
+// 中断处理函数的指针数组
 interrupt_handler_t interrupt_handlers[256];
 
 static void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags);
@@ -106,6 +108,7 @@ static void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags)
 	idt_entries[num].flags = flags;  // | 0x60
 }
 
+// 调用中断处理函数
 void isr_handler(pt_regs *regs)
 {
 	if (interrupt_handlers[regs->int_no]) {

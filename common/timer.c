@@ -13,6 +13,7 @@ void init_timer(u32int frequency)
 {
 	register_interrupt_handler(IRQ0, timer_callback);
 
+	// 每秒中断次数
 	u32int divisor = 1193180 / frequency;
 
 	outb(0x43, 0x36);

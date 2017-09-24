@@ -24,6 +24,7 @@ void init_vmm()
 
 	u32int pgd_kern_phy_addr = (u32int)pgd_kern - PAGE_OFFSET;
 
+	// 缺页中断
 	register_interrupt_handler(14, &page_fault);
 
 	switch_pgd(pgd_kern_phy_addr);

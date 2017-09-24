@@ -28,6 +28,7 @@ __attribute__((section(".init.text"))) void kern_entry()
 	pgd_tmp[0] = (u32int)pte_low | PAGE_PRESENT | PAGE_WRITE;
 	pgd_tmp[PGD_INDEX(PAGE_OFFSET)] = (u32int)pte_hign | PAGE_PRESENT | PAGE_WRITE;
 
+	// 映射内核虚拟地址物理地址
 	int i;
 	for (i = 0; i < 1024; i++) {
 		pte_low[i] = (i << 12) | PAGE_PRESENT | PAGE_WRITE;
@@ -37,14 +38,17 @@ __attribute__((section(".init.text"))) void kern_entry()
 		pte_hign[i] = (i << 12) | PAGE_PRESENT | PAGE_WRITE;
 	}
 	
+	// 设置临时页表
 	asm volatile ("mov %0, %%cr3" : : "r" (pgd_tmp));
 
 	u32int cr0;
 
+	// 启动分页
 	asm volatile ("mov %%cr0, %0" : "=r" (cr0));
 	cr0 |= 0x80000000;
 	asm volatile ("mov %0, %%cr0" : : "r" (cr0));
 	
+	// 切换内核栈
 	kern_stack_top = ((u32int)kern_stack + STACK_SIZE);
 	asm volatile ("mov %0, %%esp\n\t"
 			"xor %%ebp, %%ebp" : : "r" (kern_stack_top));
@@ -96,8 +100,6 @@ void kern_init()
 	kernel_thread(thread, NULL);
 
 	asm volatile ("sti");
-
-//	asm volatile ("int $0x04");
 
     printk("\ntest task switch\nred Z and green Z represent two different tasks:\n");
 	while (1) {

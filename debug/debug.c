@@ -34,6 +34,7 @@ void panic(const char *msg)
 	print_stack_trace();
 	printk("***\n");
 	
+	// 致命错误
 	while(1);
 }
 

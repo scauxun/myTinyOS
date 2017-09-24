@@ -3,6 +3,7 @@
 #include "elf.h"
 #include "vmm.h"
 
+// 从multiboot_t结构体中获取ELF信息
 elf_t elf_from_multiboot(multiboot_t *mb)
 {
 	int i;
@@ -25,6 +26,7 @@ elf_t elf_from_multiboot(multiboot_t *mb)
 	return elf;
 }
 
+// 查看ELF的符号信息
 const char *elf_lookup_symbol(u32int addr, elf_t *elf)
 {
 	int i;

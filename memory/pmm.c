@@ -3,10 +3,13 @@
 #include "debug.h"
 #include "pmm.h"
 
+// 物理内存页面管理的栈
 static u32int pmm_stack[PAGE_MAX_SIZE+1];
 
+// 物理内存管理的指针
 static u32int pmm_stack_top;
 
+// 物理内存页的数量
 u32int phy_page_count;
 
 void show_memory_map()

@@ -31,7 +31,7 @@ start:
 	call kern_entry	
 
 
-section .init.data		
+section .init.data		; 开启分页前的临时数据段
 stack:    times 1024 db 0  
 STACK_TOP equ $-stack-1 	
 

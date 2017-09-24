@@ -5,21 +5,24 @@
 
 void init_idt();
 
+// 中断描述符表
 typedef
 struct idt_entry_t {
-	u16int base_lo;       
+	u16int base_lo;    // 中处理函数地址低低位   
 	u16int sel;        
 	u8int  always0;    
 	u8int  flags;       
-	u16int base_hi;       
+	u16int base_hi;    // 中断处理函数地址高位 
 }__attribute__((packed)) idt_entry_t;
 
+// IDTR
 typedef
 struct idt_ptr_t {
 	u16int limit; 	
 	u32int base; 	
 } __attribute__((packed)) idt_ptr_t;
 
+// 寄存器类型
 typedef
 struct pt_regs_t {
 	u32int ds;	

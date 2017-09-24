@@ -27,8 +27,7 @@ void init_heap()
 
 void *kmalloc(u32int len)
 {
-	// 所有申请的内存长度加上管理头的长度
-	// 因为在内存申请和释放的时候要通过该结构去管理
+	// 申请的内存长度加上管理头的长度
 	len += sizeof(header_t);
 
 	header_t *cur_header = heap_first;
@@ -40,7 +39,6 @@ void *kmalloc(u32int len)
 			// 按照当前长度切割内存
 			split_chunk(cur_header, len);
 			cur_header->allocated = 1;
-			// 返回的时候必须将指针挪到管理结构之后
 			return (void *)((u32int)cur_header + sizeof(header_t));
 		}
 		// 逐次推移指针
